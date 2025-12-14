@@ -14,9 +14,17 @@ export class ProductsService {
    */
   static async getAllProducts(): Promise<Product[]> {
     try {
+      console.log('🔍 [DEBUG] Fetching products from:', process.env.NEXT_PUBLIC_API_BASE_URL)
+      console.log('🔍 [DEBUG] Endpoint:', API_ENDPOINTS.PRODUCTS)
+
       const response = await apiClient.get<Product[]>(API_ENDPOINTS.PRODUCTS)
+
+      console.log('✅ [DEBUG] Products fetched successfully:', response.data.length, 'items')
       return response.data
     } catch (error) {
+      console.error('❌ [DEBUG] Failed to fetch products')
+      console.error('❌ [DEBUG] Error details:', error)
+      console.error('❌ [DEBUG] API Base URL:', process.env.NEXT_PUBLIC_API_BASE_URL)
       logger.error('Failed to fetch products:', error)
       return []
     }
